@@ -31,9 +31,7 @@ export const register = (formData) => async (dispatch) => {
       },
     });
 
-
     dispatch({ type: "registerSuccess", payload: data });
-  
   } catch (error) {
     dispatch({
       type: "registerFailure",
@@ -69,7 +67,6 @@ export const verify = (otp) => async (dispatch) => {
 
     dispatch({ type: "verificationSuccess", payload: data.message });
   } catch (error) {
-
     dispatch({
       type: "verificationFailure",
       payload: error.response.data.message,
@@ -90,6 +87,66 @@ export const updateProfile = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "updateProfileFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const logoutUser = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: "logoutRequest",
+    });
+
+    await axios.get(`${serverUrl}/logout`);
+
+    dispatch({
+      type: "logoutSuccess",
+    });
+  } catch (error) {
+    dispatch({
+      type: "logoutFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const deleteMyProfile = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: "deleteProfileRequest",
+    });
+
+    const { data } = await axios.delete(`${serverUrl}/delete/profile`);
+    dispatch({
+      type: "deleteProfileSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "deleteProfileFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const resetPassword = (oldPassword, newPassword) => async (dispatch) => {
+  try {
+    dispatch({ type: "resetPasswordRequest" });
+
+    const { data } = await axios.put(
+      `${serverUrl}/modify/password`,
+      { oldPassword, newPassword },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    dispatch({ type: "resetPasswordSuccess", payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: "resetPasswordFailure",
       payload: error.response.data.message,
     });
   }

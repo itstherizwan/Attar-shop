@@ -1,28 +1,41 @@
-import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // You may need to install the 'expo-vector-icons' package
+import React, { useState } from "react";
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons"; 
+import { useNavigation } from "@react-navigation/native";
 
 const CustomSearchBar = () => {
-  const [searchText, setSearchText] = useState('');
+  const [keyword, setSearchText] = useState("");
 
-  const handleSearch = () => {
-    // Perform your search functionality here
-    console.log('Searching for:', searchText);
+  const navigation = useNavigation();
+
+  const handleResultClick = () => {
+    // Navigate to a new page to show search results
+    navigation.navigate("SearchResults", { keyword });
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
-        <Ionicons name="search" size={18} color="#888" style={styles.searchIcon} />
+        <Ionicons
+          name="search"
+          size={18}
+          color="#888"
+          style={styles.searchIcon}
+        />
         <TextInput
           style={styles.input}
           placeholder="Search"
           placeholderTextColor="#888"
           onChangeText={setSearchText}
-          value={searchText}
+          value={keyword}
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleSearch}>
+      <TouchableOpacity style={styles.button} onPress={handleResultClick}>
         <Ionicons name="arrow-forward" size={18} color="#fff" />
       </TouchableOpacity>
     </View>
@@ -31,18 +44,17 @@ const CustomSearchBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 20,
     marginTop: 20,
     marginBottom: 20,
-
   },
   searchContainer: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f2f2f2',
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f2f2f2",
     borderRadius: 10,
     paddingHorizontal: 10,
   },
@@ -52,13 +64,13 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     height: 35,
-    color: '#333',
+    color: "#333",
     fontSize: 16,
   },
   button: {
     padding: 8,
     borderRadius: 10,
-    backgroundColor: '#888',
+    backgroundColor: "#888",
     marginLeft: 10,
   },
 });

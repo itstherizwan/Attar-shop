@@ -35,6 +35,9 @@ const Home = ({ navigation }) => {
   const handlePlayVideo = () => {
     setIsPlaying(true);
   };
+  const handleCategoryClick = (keyword) => {
+    navigation.navigate('SearchResults', { keyword });
+  };
   return isVerified ? (
     <>
       <View style={styles.mainContainer}>
@@ -70,8 +73,8 @@ const Home = ({ navigation }) => {
                 <Text style={styles.componentText}>Categories</Text>
               </View>
 
-            
-                <View style={styles.componentStyle}>
+              <View style={styles.componentStyle}>
+                <TouchableOpacity onPress={() => handleCategoryClick("Attar")}>
                   <View style={styles.component}>
                     <Image
                       source={require("../assets/CategoryAttar.jpg")}
@@ -79,26 +82,57 @@ const Home = ({ navigation }) => {
                     />
                   </View>
                   <Text style={styles.componentText}>Attar</Text>
-                </View>
-      
+                </TouchableOpacity>
+              </View>
 
               <View style={styles.componentStyle}>
+                <TouchableOpacity onPress={() => handleCategoryClick("Dhoop")}>
                 <View style={styles.component}>
                   <Image
                     source={require("../assets/CategoryDhoop.jpg")}
                     style={styles.image}
                   />
                 </View>
-                  <Text style={styles.componentText}>Loban Dhoop</Text>
+                <Text style={styles.componentText}>Loban Dhoop</Text>
+                </TouchableOpacity>
               </View>
+
+
               <View style={styles.componentStyle}>
-                <View style={styles.component}></View>
+                <TouchableOpacity onPress={() => handleCategoryClick("Surma")}>
+                <View style={styles.component}>
+                  <Image
+                    source={require("../assets/Surma.jpg")}
+                    style={styles.image}
+                  />
+                </View>
+                <Text style={styles.componentText}>Surma</Text>
+                </TouchableOpacity>
               </View>
+
+
               <View style={styles.componentStyle}>
-                <View style={styles.component}></View>
+              <TouchableOpacity onPress={() => handleCategoryClick("M-Special")}>
+                <View style={styles.component}>
+                  <Image
+                    source={require("../assets/Special.png")}
+                    style={styles.image}
+                  />
+                </View>
+                <Text style={styles.componentText}>Featured Items</Text>
+                </TouchableOpacity>
               </View>
+
               <View style={styles.componentStyle}>
-                <View style={styles.component}></View>
+              <TouchableOpacity onPress={() => handleCategoryClick("Others")}>
+                <View style={styles.component}>
+                  <Image
+                    source={require("../assets/Other.jpg")}
+                    style={styles.image}
+                  />
+                </View>
+                <Text style={styles.componentText}>Others</Text>
+                </TouchableOpacity>
               </View>
             </ScrollView>
           </View>
@@ -180,7 +214,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     overflow: "hidden",
   },
-  componentStyle:{},
+  componentStyle: {},
   componentText: {
     fontSize: 14,
     color: "#003333",

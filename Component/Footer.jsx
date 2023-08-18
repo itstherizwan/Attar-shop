@@ -16,7 +16,9 @@ const Footer = () => {
     setFocusedScreen('home');
   }, []);
 
-
+  const handleCategoryClick = (keyword) => {
+    navigation.navigate('SearchResults', { keyword });
+  };
 
   useEffect(() => {
     // Set the initial focused screen when the component mounts
@@ -84,7 +86,7 @@ const Footer = () => {
           },
         ]}
       >
-        <Icon name="home" size={isHomeFocused ? 40 : 25} color={isHomeFocused ? "#53a20e" :"black"} />
+        <Icon name="home" size={isHomeFocused ? 30 : 20} color={isHomeFocused ? "#f57c00" :"#1565c0"} />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -100,11 +102,11 @@ const Footer = () => {
           },
         ]}
       >
-        <Icon name="user" size={isProfileFocused ? 40 : 25} color={isProfileFocused ? "#53a20e":"black"} />
+        <Icon name="user" size={isProfileFocused ? 30 : 20} color={isProfileFocused ? "#f57c00" :"#1565c0"} />
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('hot-featured')}
+        onPress={() => handleCategoryClick("M-Special")}
         activeOpacity={0.8}
         onPressIn={() => handlePressIn(scaleValueHotFeatured)}
         onPressOut={() => handlePressOut(scaleValueHotFeatured)}
@@ -118,7 +120,7 @@ const Footer = () => {
           },
         ]}
       >
-        <Icon name="free-code-camp" size={isHotFeaturedFocused ? 40 : 25} color={isHotFeaturedFocused ? "#53a20e" :'black'} />
+        <Icon name="free-code-camp" size={isHotFeaturedFocused ? 30 : 20} color={isHotFeaturedFocused ? "#f57c00" :"#1565c0"} />
       </TouchableOpacity>
     </View>
   );

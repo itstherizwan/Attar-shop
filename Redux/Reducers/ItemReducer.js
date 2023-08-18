@@ -80,34 +80,6 @@ export const itemDetailReducer = createReducer(
     },
   }
 );
-// export const productReviewsReducer = (state = { reviews: [] }, action) => {
-//   switch (action.type) {
-//     case "allReviewRequest":
-//       return {
-//         ...state,
-//         loading: true,
-//       };
-//     case "allReviewSuccess":
-//       return {
-//         loading: false,
-//         reviews: action.payload,
-//       };
-//     case "allReviewFail":
-//       return {
-//         ...state,
-//         loading: false,
-//         error: action.payload,
-//       };
-
-//     case "clearErrors":
-//       return {
-//         ...state,
-//         error: null,
-//       };
-//     default:
-//       return state;
-//   }
-// };
 
 export const productReviewsReducer = createReducer (
   { reviews: [] },{

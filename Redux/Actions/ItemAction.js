@@ -1,13 +1,31 @@
 import axios from "axios";
 import { serverUrl } from "../store";
 
-export const getAllItems = () => async (dispatch) => {
+export const getAllItems = (keyword='') => async (dispatch) => {
   try {
     dispatch({
       type: "allProductRequest",
     });
+    const { data } = await axios.get(`${serverUrl}/get-product?keyword=${keyword}`);
+    dispatch({
+      type: "allProductSuccess",
+      payload: data,
+    });
+    
+  } catch (error) {
+    dispatch({
+      type: "allProductFail",
+      payload: error.response.data.message,
+    });
+  }
+};
 
-    const { data } = await axios.get(`${serverUrl}/get-product`);
+export const getByCategory = (category='') => async (dispatch) => {
+  try {
+    dispatch({
+      type: "allProductRequest",
+    });
+    const { data } = await axios.get(`${serverUrl}/by-category?category=${category}`);
     dispatch({
       type: "allProductSuccess",
       payload: data,

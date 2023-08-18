@@ -92,7 +92,7 @@ const Order = ({ navigation }) => {
       };
 
       dispatch(createOrder(orderData));
-      navigation.navigate("order");
+      navigation.navigate("successOrder");
     }
     // console.log(orderData)
     // } else {

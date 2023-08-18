@@ -61,9 +61,9 @@ const EditProfile = ({ navigation, route }) => {
           source={{ uri: avatar ? avatar : null }}
           style={Styles.avatar}
         />
-        <TouchableOpacity onPress={handleImage}>
+        {/* <TouchableOpacity onPress={handleImage}>
           <Text style={Styles.text1}>Change Photo</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <View style={Styles.inputContainer}>

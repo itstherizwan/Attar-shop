@@ -7,16 +7,53 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/AntDesign";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import {
+  deleteMyProfile,
+  loadUser,
+  logoutUser,
+} from "../Redux/Actions/UserAction";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
 const Profile = ({ navigation }) => {
   const { user } = useSelector((state) => state.auth);
+  const { loading, message } = useSelector((state) => state.profile);
+  const [displayMessage, setDisplayMessage] = React.useState(null);
   // console.log(user)
+  React.useEffect(() => {
+    if (message) {
+      Toast.show({
+        type: "success",
+        text1: "Profile Deletion",
+        text2: message,
+        visibilityTime: 3000, // Duration to display the toast
+      });
+      dispatch({ type: "clearMessage" });
+    }
+  }, [message]);
+
+  const dispatch = useDispatch();
+  const logoutHandler = async () => {
+    dispatch(logoutUser());
+  };
+
+  const deleteProfileHandler = async () => {
+    try {
+      await dispatch(deleteMyProfile());
+
+      // Set the displayMessage state with the updated message
+      setDisplayMessage(message);
+    } catch (error) {
+      console.log("Error deleting profile:", error);
+    }
+  };
+
   return (
     <View style={styles.mainContainer}>
+      <Toast />
       <Text style={styles.heading}>MY PROFILE</Text>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.profileInfo}>
@@ -50,16 +87,17 @@ const Profile = ({ navigation }) => {
           >
             {/* Your component 1 */}
             {/* Example: */}
-            <Icon name="edit" size={30} color="black" />
+            <Icon name="edit" size={30} color="#0f4459" />
             <Text>My Orders</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.columnItem}
             onPress={() => navigation.navigate("cart")}
           >
             {/* Your component 2 */}
             {/* Example: */}
-            <FontAwesome name="opencart" size={30} color="black" />
+            <FontAwesome name="opencart" size={30} color="#0f4459" />
             <Text>My Cart</Text>
           </TouchableOpacity>
         </View>
@@ -71,21 +109,33 @@ const Profile = ({ navigation }) => {
             <MaterialCommunityIcons
               name="headphones-settings"
               size={30}
-              color="black"
+              color="#0f4459"
             />
             <Text>Help Center</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.columnItem}>
+          <TouchableOpacity
+            style={styles.columnItem}
+            onPress={() => navigation.navigate("resetPasswd")}
+          >
             {/* Your component 4 */}
             {/* Example: */}
-            <MaterialCommunityIcons name="lock-reset" size={30} color="black" />
+            <MaterialCommunityIcons name="lock-reset" size={30} color="#0f4459" />
             <Text>Reset Password</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.logoutContainer}>
-          <TouchableOpacity style={styles.logoutButton}>
+          <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler}>
             <Text style={styles.logoutButtonText}>Log Out</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.deleteProfileContainer}>
+          <TouchableOpacity
+            style={[styles.deleteButton, { opacity: loading ? 0.5 : 1 }]}
+            onPress={deleteProfileHandler}
+            disabled={loading}
+          >
+            <Text style={styles.deleteButtonText}>Delete Account</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -147,7 +197,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   editButton: {
-    backgroundColor: "#900",
+    backgroundColor: "#ff9800",
     borderRadius: 20,
     padding: 10,
   },
@@ -172,10 +222,23 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   logoutButton: {
-    backgroundColor: "#070",
+    backgroundColor: "#0f4459",
     paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 20,
+    marginBottom: 15,
+  },
+  deleteButton: {
+    backgroundColor: "#900",
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 20,
+  },
+  deleteButtonText: {
+    color: "white",
+    fontSize: 16,
+    textAlign: "center",
+    fontWeight: "bold",
   },
   logoutButtonText: {
     color: "white",
